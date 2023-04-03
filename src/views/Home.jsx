@@ -1,34 +1,25 @@
 import React, { useContext, useState } from 'react';
 import { Navigate } from 'react-router';
-import UserContext from '../components/contexts/UserProvider';
+import UserContext from '../contexts/UserProvider';
 
 const Home = () => {
   const [nameValue, setNameValue] = useState('');
   const [nameError, setNameError] = useState(null);
   const { user, setUser } = useContext(UserContext);
  
-  const handleChange = (e) => {
-
-    const newNameValue = e.target.value;
-    setNameValue(newNameValue);
-
-    if (newNameValue === '') setNameError('Name is required');
-    else if (!/^[A-Z][a-z ]{2,}$/.test(newNameValue))
-      setNameError('Only letters and blanks are allowed and least should be 3 length');
-    else setNameError(null);
+  const handleChange = (e) => { 
+    setNameValue(e.target.value)
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(!nameError) {
 
-      setUser(nameValue);
-    }
+    if (!nameError) setUser(nameValue);
   };
+
   return (
-    <div>
-      <div>
-        <img src="/pokedex_img.png" alt="Pokedex" />
-      </div>
+    <div> 
+      <img src="/pokedex.png" alt="Pokedex" /> 
       <div className="text-center">
         <h1 className="text-red-500 text-4xl font-bold">¡Hello Trainer!</h1>
         <p>Type your name to start</p>
@@ -49,8 +40,9 @@ const Home = () => {
       </form>
       {nameError && <p className="text-red-500 text-center">{nameError}</p>}
       {user && <Navigate to="/pokedex" />}
+
     </div>
-  );
-};
+   );
+  };
 
 export default Home;

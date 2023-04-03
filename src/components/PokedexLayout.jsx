@@ -3,10 +3,9 @@ import { Outlet } from "react-router-dom";
 
 const PokedexLayout = () => {
     return (
-    <div>
-        <Outlet />
-        <h1> Pokedex Layout</h1>
-    </div>
+        <div> 
+            <Outlet/> 
+        </div>
     );
 };
 

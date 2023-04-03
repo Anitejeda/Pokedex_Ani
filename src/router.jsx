@@ -1,39 +1,31 @@
-'react-router-dom'
-PokedexLayout;
 import { createBrowserRouter } from 'react-router-dom';
 import PokedexLayout from './components/PokedexLayout';
+import ProtectedRoute from './components/ProtectedRoute';
 import Home from './views/Home';
 import Pokedex from './views/Pokedex';
 import PokemonDetail from './views/PokemonDetail';
-import ProtectedRoute from './components/ProtectedRoute'
-
-
-export const router = createBrowserRouter ([
-{
+ 
+export const router = createBrowserRouter([
+  {
     path: '/',
     element: <Home />,
-},
-{
+  },
+  {
     path: '/pokedex',
-    element: <PokedexLayout/>,
+    element: (
+      <ProtectedRoute>
+        <PokedexLayout />
+      </ProtectedRoute>
+    ),
     children: [
-        {
-            path: ':id',
-            element: 
-            <ProtectedRoute> 
-                <PokemonDetail/> 
-            </ProtectedRoute>
-        },
-        {
-            path: '',
-            element: (
-            <ProtectedRoute> 
-                <Pokedex/> 
-            </ProtectedRoute>
-            ),
-        },
+      {
+        path: ':id',
+        element: <PokemonDetail />,
+      },
+      {
+        path: '',
+        element: <Pokedex />,
+      },
     ],
-},
+  },
 ]);
-
-

@@ -1,8 +1,9 @@
 import React, { useContext } from 'react'
-import UserContext from './contexts/UserProvider'
+import UserContext from '../contexts/UserProvider';
+import { Navigate } from 'react-router-dom';
 
 const ProtectedRoute = ({ children }) => {
- const { user }= useContext(UserContext);
+ const { user } = useContext(UserContext);
 
  if (user) return <> {children} </>;
  else return <Navigate to="/"/>
