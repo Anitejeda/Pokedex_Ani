@@ -16,7 +16,7 @@ const getAllPokemons = async () => {
 const Pokedex = () => {
   const { user } = useContext(UserContext);
   const [pokemons, setPokemons] = useState([]);
-  //*const pokemonsPagination = usePagination(pokemons, 55)
+  // const pokemonsPagination = usePagination(0, 20)
 
   const loadAllpokemons = async () => {
     const allPokemons = await getAllPokemons(); 
