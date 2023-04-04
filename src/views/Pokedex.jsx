@@ -5,7 +5,7 @@ import PokemonCard from '../components/PokemonCard';
 
 const getAllPokemons = async () => { 
   try {
-    const res = await axios.get('https://pokeapi.co/api/v2/pokemon/');
+    const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/?offset=${0}&limit=${1000}`);
 
     return res.data.results;
   } catch (error ) {
@@ -39,7 +39,7 @@ const Pokedex = () => {
       <p className='p-5'>
         <span className="text-red-500 font-semibold"> Bienvenido {user}, </span> aqui podras encontrar tu pokemon favorito
       </p>
-      <div className="grid grid-cols-5 gap-2 p-5">
+      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2 p-5">
         {pokemons.map(pokemon => <PokemonCard key={pokemon.url} pokemonData={pokemon}/>)}
       </div>
       <section>
