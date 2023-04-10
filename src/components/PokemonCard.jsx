@@ -48,7 +48,7 @@ const PokemonCard = ({ pokemonData }) => {
   return (
     <>
       {pokemon && (
-        <article className={`shadow-xl rounded-xl ${typeColor[pokemon.types[0].type.name]} flex flex-row w-full overflow-hidden`}>
+        <article className={`shadow-xl rounded-xl ${typeColor[pokemon.types[0].type.name]} flex flex-row w-full overflow-hidden hover:opacity-90 transition-all duration-300 cursor-pointer`}>
           <section className='p-4 flex-initial w-[75%] select-none z-10'>
             <h2 className="text-2xl font-semibold capitalize text-white pb-4">{pokemon.name}</h2> 
             <section className='flex gap-2 bg-[#ffffff55] rounded-full text-center mb-1 break-words w-fit'>

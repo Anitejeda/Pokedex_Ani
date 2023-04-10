@@ -42,8 +42,8 @@ const Home = () => {
       </form>
       {nameError && <p className="text-red-500 text-center">{nameError}</p>}
       {user && <Navigate to="/pokedex" />}
-
     </div>
+    
    );
   };
 
