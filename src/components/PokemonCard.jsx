@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { typeColor } from '../services/typeColor';
 
 const getPokemonById = async (url) => {
   try {
@@ -10,29 +11,6 @@ const getPokemonById = async (url) => {
     console.error(error);
   }
 };
-
-const typeColor = {
-  normal: "bg-slate-300",
-  fighting: "bg-orange-900",
-  flying: "bg-sky-200",
-  poison: "bg-violet-500",
-  ground: "bg-orange-300",
-  rock: "bg-orange-700",
-  bug: "bg-lime-500",
-  ghost: "bg-fuchsia-800",
-  steel: "bg-gray-600",
-  fire: "bg-red-500",
-  water: "bg-blue-500",
-  grass: "bg-green-500",
-  electric: "bg-yellow-500",
-  psychic: "bg-pink-600",
-  ice: "bg-cyan-400",
-  dragon: "bg-sky-700",
-  dark: 'bg-gray-900',
-  fairy: 'bg-pink-300',
-  unknown: "bg-transparent",
-  shadow: "bg-black" 
-}
 
 const PokemonCard = ({ pokemonData }) => {
   const navigate = useNavigate();
@@ -71,7 +49,7 @@ const PokemonCard = ({ pokemonData }) => {
             </section>
           </section> 
           <header className='w-[40%] justify-between relative'> 
-              <img src="/pokeball.png" className='absolute bottom-[3%] right-[-110%] min-w-[400px] z-0 opacity-30'/>
+              <img src="/pokeball.png" className='absolute bottom-[3%] right-[-80%] min-w-[400px] z-0 opacity-30'/>
               <img src={ pokemon.sprites.other['dream_world'].front_default ?? pokemon.sprites.other['official-artwork'].front_default ?? pokemon.sprites.front_default } alt={pokemon.name} className='absolute bottom-[30%] right-[30%] min-h-[120px] max-h-[120px] min-w-[120px]'/> 
           </header>
         </article>

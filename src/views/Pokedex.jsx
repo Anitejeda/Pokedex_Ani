@@ -1,41 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
-import UserContext from '../contexts/UserProvider';
-import axios from 'axios';
+import UserContext from '../contexts/UserProvider'; 
 import PokemonCard from '../components/PokemonCard';
 import { usePagination } from '../hooks/usePagination'
- 
+import { getAllPokemons } from '../services/getAllPokemons';
+import { typeColor } from '../services/typeColor';
 
-const getAllPokemons = async () => { 
-  try { 
-    const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/?`);
-    return res.data.results;
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-const typeColor = {
-  normal: "bg-slate-300",
-  fighting: "bg-orange-900",
-  flying: "bg-sky-200",
-  poison: "bg-violet-500",
-  ground: "bg-orange-300",
-  rock: "bg-orange-700",
-  bug: "bg-lime-500",
-  ghost: "bg-fuchsia-800",
-  steel: "bg-gray-600",
-  fire: "bg-red-500",
-  water: "bg-blue-500",
-  grass: "bg-green-500",
-  electric: "bg-yellow-500",
-  psychic: "bg-pink-600",
-  ice: "bg-cyan-400",
-  dragon: "bg-sky-700",
-  dark: 'bg-gray-900',
-  fairy: 'bg-pink-300',
-  unknown: "bg-gray-900",
-  shadow: "bg-black" 
-}
 
 const Pokedex = () => {
   const { user } = useContext(UserContext);
@@ -43,8 +12,7 @@ const Pokedex = () => {
   const [pokeSearch, setPokeSearch] = useState("");
   const [typeSelected, setTypeSelected] = useState(""); 
 
-  const pokemonsPagination = usePagination(pokemons, 20);
-
+  const pokemonsPagination = usePagination(pokemons, 50); 
  
   const loadAllpokemons = async () => {
     const allPokemons = await getAllPokemons();
@@ -53,8 +21,16 @@ const Pokedex = () => {
 
   useEffect(() => {
     loadAllpokemons(); 
-  }, []);
+  }, [pokeSearch]);
 
+  const handleSearch = (e) => {
+    e.preventDefault()  
+    setPokemons(pokemons.filter(pokemon => pokemon.name == pokeSearch.toLowerCase()))
+  }
+
+  const handleSelect = (e) => {
+
+  }
   
   return (
     <div className="w-full h-full">
@@ -137,6 +113,12 @@ const Pokedex = () => {
         <form onSubmit={e => handleSearch(e)} className=' border-2 border-slate-500 rounded-full p-3  min-w-[400px]'>
           <input type="text" value={pokeSearch} onChange={e => setPokeSearch(e.target.value)} placeholder='Buscar un pokemón' className='text-gray-700 font-semibold placeholder-red-400 w-full outline-none text-center'/>  
         </form>
+      </div>
+
+      <div className='flex flex-row gap-2 justify-center'>
+        <button  className={`bg-red-500 hover:bg-red-300 rounded-xl text-white p-2 px-3 min-w-[41.25px]`} onClick={() => pokemonsPagination.previousPage()}>&lt;</button>
+        {pokemonsPagination.pages.filter(page => (page <= (pokemonsPagination.currentPage + 2)) && page >= (pokemonsPagination.currentPage - 2)).map(page => <button key={page} className={`${pokemonsPagination.currentPage == page ? "bg-red-700 hover:bg-red-400" : "bg-red-500 hover:bg-red-300"} rounded-xl text-white p-2 px-3 min-w-[41.25px]`} onClick={() => pokemonsPagination.changePageTo(page)}>{page}</button>)}
+        <button className={`bg-red-500 hover:bg-red-300 rounded-xl text-white p-2 px-3 min-w-[41.25px]`} onClick={() => pokemonsPagination.nextPage()}>&gt;</button>
       </div>
 
       <section className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2 p-5">
