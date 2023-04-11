@@ -2,34 +2,25 @@ import React, { useContext, useEffect, useState } from 'react';
 import UserContext from '../contexts/UserProvider'; 
 import PokemonCard from '../components/PokemonCard';
 import { usePagination } from '../hooks/usePagination'
-import { getAllPokemons } from '../services/getAllPokemons';
 import { typeColor } from '../services/typeColor';
+import { Form, useLoaderData } from 'react-router-dom';
 
 
 const Pokedex = () => {
   const { user } = useContext(UserContext);
-  const [pokemons, setPokemons] = useState([]);
-  const [pokeSearch, setPokeSearch] = useState("");
-  const [typeSelected, setTypeSelected] = useState(""); 
-
+  const { pokemons, types } = useLoaderData()
   const pokemonsPagination = usePagination(pokemons, 50); 
- 
-  const loadAllpokemons = async () => {
-    const allPokemons = await getAllPokemons();
-    setPokemons(allPokemons);
-  };
+  const [pokeSearch, setPokeSearch] = useState("");
+  const [pokeType, setPokeType] = useState(""); 
 
-  useEffect(() => {
-    loadAllpokemons(); 
-  }, [pokeSearch]);
-
-  const handleSearch = (e) => {
-    e.preventDefault()  
-    setPokemons(pokemons.filter(pokemon => pokemon.name == pokeSearch.toLowerCase()))
+  const handleSearchChange = (e) => {
+    setPokeSearch(e.target.value)
+    setPokeType("")
   }
 
-  const handleSelect = (e) => {
-
+  const handleTypeChange = (e) => {
+    setPokeType(e.target.value)
+    setPokeSearch("")
   }
   
   return (
@@ -44,8 +35,10 @@ const Pokedex = () => {
         <span className="text-red-500 font-semibold"> Bienvenido {user}, </span> a continuación podrás ver todos los pokemones en tu Pokedex
       </p> 
 
-      <div className='lg:flex lg:justify-center lg:px-20 lg:gap-60 grid grid-cols-1 my-4 gap-4'>
-        <select className={`border-2 border-slate-500 rounded-full p-3 text-gray-700 font-semibold placeholder-red-400 min-w-[400px] capitalize text-center ${typeColor[typeSelected]} ${typeSelected === "normal" ? "" : typeSelected == "flying" ? "" : typeSelected == "" ? "" : "text-white"}`} onClick={e => setTypeSelected(e.target.value)}> 
+      <Form className='mb-10 mx-10'> 
+        <h3 className='text-red-600 font-semibold'>Filter for Search</h3> 
+        <input type="text" value={pokeSearch} name='pokemon_name' onChange={e => handleSearchChange(e)} placeholder='Buscar un pokemón' className='text-gray-700 font-semibold placeholder-red-400 p-3 outline-none text-center border-2 border-slate-500 rounded-full min-w-[400px] mb-2'/> 
+        <select name='pokemon_type' value={pokeType} className={`border-2 border-slate-500 rounded-full p-3 text-gray-700 font-semibold placeholder-red-400 min-w-[400px] capitalize text-center ${typeColor[pokeType]} ${pokeType === "normal" ? "" : pokeType == "flying" ? "" : pokeType == "" ? "" : "text-white"} lg:ml-10`} onChange={e => handleTypeChange(e)}> 
           <option className='text-gray-800' value={""}>
             Selecciona un Tipo
           </option>
@@ -109,11 +102,9 @@ const Pokedex = () => {
           <option className={`${typeColor['shadow']} text-white`}>
             shadow
           </option> 
-        </select> 
-        <form onSubmit={e => handleSearch(e)} className=' border-2 border-slate-500 rounded-full p-3  min-w-[400px]'>
-          <input type="text" value={pokeSearch} onChange={e => setPokeSearch(e.target.value)} placeholder='Buscar un pokemón' className='text-gray-700 font-semibold placeholder-red-400 w-full outline-none text-center'/>  
-        </form>
-      </div>
+        </select>  
+        <button type="submit" className='bg-red-500 text-white p-2 hover:bg-red-300 rounded-xl ml-3'>Search</button>
+      </Form>
 
       <div className='flex flex-row gap-2 justify-center'>
         <button  className={`bg-red-500 hover:bg-red-300 rounded-xl text-white p-2 px-3 min-w-[41.25px]`} onClick={() => pokemonsPagination.previousPage()}>&lt;</button>
