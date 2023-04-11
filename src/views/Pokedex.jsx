@@ -51,8 +51,8 @@ const Pokedex = () => {
           <option className={`${typeColor['flying']} text-gray-800`}>
             flying
           </option>
-          <option className={`${typeColor['posion']} text-white`}>
-            posion
+          <option className={`${typeColor['poison']} text-white`}>
+            poison
           </option>
           <option className={`${typeColor['ground']} text-white`}>
             ground
