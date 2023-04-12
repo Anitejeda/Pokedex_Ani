@@ -36,9 +36,9 @@ const Pokedex = () => {
       </p> 
 
       <Form className='mb-10 mx-10'> 
-        <h3 className='text-red-600 font-semibold'>Filter for Search</h3> 
-        <input type="text" value={pokeSearch} name='pokemon_name' onChange={e => handleSearchChange(e)} placeholder='Buscar un pokemón' className='text-gray-700 font-semibold placeholder-red-400 p-3 outline-none text-center border-2 border-slate-500 rounded-full min-w-[400px] mb-2'/> 
-        <select name='pokemon_type' value={pokeType} className={`border-2 border-slate-500 rounded-full p-3 text-gray-700 font-semibold placeholder-red-400 min-w-[400px] capitalize text-center ${typeColor[pokeType]} ${pokeType === "normal" ? "" : pokeType == "flying" ? "" : pokeType == "" ? "" : "text-white"} lg:ml-10`} onChange={e => handleTypeChange(e)}> 
+        <h3 className='text-red-600 font-semibold mb-2'>Filter for Search</h3> 
+        <input type="text" value={pokeSearch} name='pokemon_name' onChange={e => handleSearchChange(e)} placeholder='Buscar un pokemón' className='text-gray-700 font-semibold placeholder-red-400 p-3 outline-none text-center border-2 border-slate-500 rounded-full lg:min-w-[400px] mb-2 min-h-[55px] min-w-[230px]'/> 
+        <select name='pokemon_type' value={pokeType} className={`border-2 border-slate-500 rounded-full p-3 text-gray-700 font-semibold placeholder-red-400 lg:min-w-[400px] capitalize text-center ${typeColor[pokeType]} ${pokeType === "normal" ? "" : pokeType == "flying" ? "" : pokeType == "" ? "" : "text-white"} lg:ml-10 min-h-[55px] min-w-[230px]`} onChange={e => handleTypeChange(e)}> 
           <option className='text-gray-800' value={""}>
             Selecciona un Tipo
           </option>
@@ -103,7 +103,7 @@ const Pokedex = () => {
             shadow
           </option> 
         </select>  
-        <button type="submit" className='bg-red-500 text-white p-2 hover:bg-red-300 rounded-xl ml-3'>Search</button>
+        <button type="submit" className={`bg-red-500 font-semibold text-white p-3 hover:bg-red-300 rounded-2xl ml-3 mt-2 min-w-[70px] ${(pokeType == "" && pokeSearch == "" ) ? "bg-red-300 cursor-not-owed" : ""}`} disabled={(pokeType == "" && pokeSearch == "" )}>Search</button>
       </Form>
 
       <div className='flex flex-row gap-2 justify-center'>

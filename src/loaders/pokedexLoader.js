@@ -25,7 +25,7 @@ export const pokedexLoader = async ({ request }) => {
         const name = url.searchParams.get('pokemon_name').toLowerCase();
         pokemons = await getAllPokemons();
         pokemons = pokemons.filter(pokemon => pokemon.name.includes(name));
-    } 
+    }
 
     return {
         pokemons,
